@@ -10,8 +10,8 @@ const router = createRouter({
       component: ListView,
     },
     {
-      path: '/item',
-      name: 'item',
+      path: '/character/:id',
+      name: 'character',
       component: () => import('../views/ItemView.vue'),
     },
   ],

@@ -1,6 +1,6 @@
 # Testa uzdevums - Ēriks Ķirsis
 
- - Vue 3
+ - Vue 3 SPA
  - Nginx
  - Rick & Morty API
 
