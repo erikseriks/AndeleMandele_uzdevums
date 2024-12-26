@@ -1,38 +1,26 @@
 import { defineStore } from 'pinia'
-
-interface ResponseInterface {
-  info: {
-    count: number
-    pages: number
-  }
-  results: SingleItem[]
-}
-
-interface SingleItem {
-  id: number
-  name: string
-  status: string
-  species: string
-  image: string
-}
+import type { SingleItemInterface } from '@/types/RickAndMorty/SingleItemInterface.ts'
+import type { ResponseInterface } from '@/types/RickAndMorty/ResponseInterface.ts'
 
 const baseUrl = '/api/rick-and-morty/character/'
 
 export const useCharacterStore = defineStore('character', {
   state: () => ({
     response: {} as ResponseInterface | void,
-    singleItem: {} as SingleItem,
-    items: [] as SingleItem[],
+    singleItem: {} as SingleItemInterface,
+    items: [] as SingleItemInterface[],
     count: 826,
     totalPages: 42,
     pageLoaded: 0,
     nextPage: 1,
-    scrollPosition: 0,
+    listLoading: false,
   }),
 
   actions: {
     async fetchList() {
-      if (this.nextPage <= this.pageLoaded || this.nextPage > this.totalPages) return
+      if (this.listLoading || this.nextPage > this.totalPages) return
+
+      this.listLoading = true
 
       this.response = await fetch(baseUrl + '?page=' + this.nextPage)
         .then(function (response) {
@@ -51,6 +39,9 @@ export const useCharacterStore = defineStore('character', {
         })
         .catch((e) => {
           console.error(e)
+        })
+        .finally(() => {
+          this.listLoading = false
         })
     },
 

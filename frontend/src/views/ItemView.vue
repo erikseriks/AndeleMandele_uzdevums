@@ -17,7 +17,7 @@ onMounted(() => {
   <header>
     <nav>
       <h1>
-        <RouterLink to="/">Uz sarakstu</RouterLink>
+        <RouterLink :to="'/#' + id">Uz sarakstu</RouterLink>
       </h1>
     </nav>
   </header>
